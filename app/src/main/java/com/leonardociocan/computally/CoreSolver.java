@@ -366,7 +366,7 @@ public class CoreSolver
             if (functionnotation.group(1).equals("exp")) {
                 number = Math.exp(number);//* (degrees ? (Math.PI / 180) : 1));
             }
-
+            int x;
 
             s = number.toString();
 
