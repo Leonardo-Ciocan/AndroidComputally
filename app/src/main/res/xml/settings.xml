@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:title="Karma settings">
+    <PreferenceCategory android:title="Application settings">
+        <EditTextPreference android:key="decimals" android:title="Decimals after dot" android:defaultValue="4"></EditTextPreference>
+        <EditTextPreference android:key="font_size" android:title="Font size" android:inputType="numberDecimal" android:defaultValue="10.0"></EditTextPreference>
+
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Feedback">
+        <Preference android:key="review" android:title="Review app in play store"></Preference>
+        <Preference android:key="email" android:title="Email developer" android:summary="leonardo.ciocan@outlook.com"></Preference>
+    </PreferenceCategory>
+</PreferenceScreen>
