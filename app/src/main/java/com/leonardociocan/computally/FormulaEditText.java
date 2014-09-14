@@ -10,7 +10,6 @@ import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,20 +19,27 @@ public class FormulaEditText extends EditText {
     final Pattern number = Pattern.compile("(\\d+|\\d+.\\d+)");
     final Pattern operator = Pattern.compile("[-+/\\\\*=]");
     final Pattern variable = Pattern.compile("");
+    public Sheet sheet;
+    //boolean enabled;
+
+    public FormulaEditText(Context c , Sheet s ){
+        super(c);
+        sheet = s;
+    }
 
     public FormulaEditText(Context context) {
         super(context);
-        init(context);
+        //init(context);
     }
 
     public FormulaEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        //init(context);
     }
 
     public FormulaEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init(context);
+        //init(context);
     }
 
     final FormulaEditText txt =this;
@@ -95,9 +101,9 @@ public class FormulaEditText extends EditText {
             WordtoSpan.setSpan(new ForegroundColorSpan(Color.RED), n.start(), n.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
-        if(!Core.sheet.VariableColors.isEmpty()) {
+        if(!sheet.VariableColors.isEmpty()) {
             String varRegex = "\\s?(";
-            for (String var : Core.sheet.VariableColors.keySet()) {
+            for (String var : sheet.VariableColors.keySet()) {
                 varRegex += var + "|";
             }
             varRegex = varRegex.substring(0, varRegex.length() - 1) + ")\\s?";
@@ -105,7 +111,7 @@ public class FormulaEditText extends EditText {
             Pattern pattern = Pattern.compile(varRegex);
             Matcher vn = pattern.matcher(txt.getText());
             while (vn.find()) {
-                int c = Core.sheet.VariableColors.get(txt.getText().toString().substring(vn.start(),vn.end()).trim());
+                int c = sheet.VariableColors.get(txt.getText().toString().substring(vn.start(),vn.end()).trim());
                 WordtoSpan.setSpan(
                         new ForegroundColorSpan(c),
                         vn.start(), vn.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -125,5 +131,8 @@ public class FormulaEditText extends EditText {
     }
 
 
-
+    public void setSheet(Sheet sheet) {
+        this.sheet = sheet;
+        init(getContext());
+    }
 }

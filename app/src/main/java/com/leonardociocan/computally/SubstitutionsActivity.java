@@ -5,10 +5,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 public class SubstitutionsActivity extends Activity {
@@ -23,7 +21,7 @@ public class SubstitutionsActivity extends Activity {
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        adapter = new SubstitutionsAdapter(this , R.layout.substitution_row , Core.sheet.Substitutions);
+        adapter = new SubstitutionsAdapter(this , R.layout.substitution_row , Core.selectedSheet.Substitutions);
 
         ListView view = (ListView)findViewById(R.id.sub_list);
         view.setAdapter(adapter);

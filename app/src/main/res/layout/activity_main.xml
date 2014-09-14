@@ -15,11 +15,12 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-        <LinearLayout
+        <ListView
             android:id="@+id/line_holder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:divider="@null">
 
             <!--<LinearLayout
                android:layout_width="fill_parent"
@@ -40,9 +41,9 @@
 
 
             </LinearLayout>-->
-            </LinearLayout>
+            </ListView>
 
-        <!-- The navigation drawer -->
+        <!-- The navigation drawer
         <LinearLayout
 
             android:layout_gravity="start"
@@ -50,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@color/blue"
+            android:background="#fff"
             >
             <TextView android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,16 +60,22 @@
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
                 android:layout_margin="5dp"
-                android:textColor="#fff">
+                android:textColor="@color/blue">
 
             </TextView>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="New sheet"
+                android:id="@+id/newBtn"/>
             <ListView
+                android:id="@+id/sheets_holder"
             android:layout_width="240dp"
             android:layout_height="match_parent"
             android:choiceMode="singleChoice"
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp"/>
-    </LinearLayout>
+    </LinearLayout>-->
     </android.support.v4.widget.DrawerLayout>
 
 </RelativeLayout>

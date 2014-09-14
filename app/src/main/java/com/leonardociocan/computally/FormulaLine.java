@@ -5,22 +5,15 @@ import android.content.Context;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.text.Editable;
-import android.text.Layout;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.Inflater;
 
 public class FormulaLine extends LinearLayout {
 
@@ -74,7 +67,10 @@ public class FormulaLine extends LinearLayout {
     void init(final Context context){
         inflate(context, R.layout.line_layout, this);
         final FormulaEditText input = (FormulaEditText)findViewById(R.id.input);
+        input.setSheet(sheet);
+
         final TextView result= (TextView)findViewById(R.id.result);
+        input.setText(sheet.Lines.get(x));
 resultView = result;
         Core.setSheetChangedListener(new SheetChangedListener() {
             @Override
@@ -84,7 +80,7 @@ resultView = result;
                     public void run() {
                         String resultstr = "0.0";
                         try{
-                            resultStr = String.valueOf(Core.sheet.Solver.EvaluateNested(input.getText().toString()));
+                            resultStr = String.valueOf(sheet.Solver.EvaluateNested(input.getText().toString()));
                         } catch (Exception ex){}
 
                         ((Activity)context).runOnUiThread(new Runnable() {
@@ -120,11 +116,12 @@ resultView = result;
             }
             @Override
             public void afterTextChanged(Editable editable) {
-
+                sheet.Lines.set(x , input.getText().toString());
                 if(!input.flag)Core.reloadAll();
                 if(!input.flag){
-                    /*int pos = input.getSelectionStart();
-                    for(Substitution sub : Core.sheet.Substitutions){
+                    if(sheet.Substitutions.size() == 0 )return;
+                    int pos = input.getSelectionStart();
+                    for(Substitution sub : sheet.Substitutions){
                         if(sub.getFrom().equals("") || sub.getTo().equals("")) continue;
                         Pattern pattern = Pattern.compile("("+sub.from+")");
                         Matcher m = pattern.matcher(input.getText());
@@ -134,7 +131,7 @@ resultView = result;
                     input.setText(sheet.Lines.get(x));
                     input.flag = false;
                     input.setSelection( input.getText().length() );
-                    input.highlight();*/
+                    input.highlight();
                 }
             }
         });

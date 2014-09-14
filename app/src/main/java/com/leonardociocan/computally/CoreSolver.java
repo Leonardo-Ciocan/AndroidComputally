@@ -15,6 +15,7 @@ public class CoreSolver
     public Map<String, Double> VariableTable = new HashMap<String, Double>();
 
 
+
     public double EvaluateAssignment(String expr)
     {
         //expr = expr.replace(" ", "");
