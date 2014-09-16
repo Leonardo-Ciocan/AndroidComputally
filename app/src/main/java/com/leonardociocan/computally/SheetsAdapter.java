@@ -16,6 +16,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import it.gmariotti.cardslib.library.internal.Card;
+import it.gmariotti.cardslib.library.view.CardView;
+
 
 public class SheetsAdapter extends ArrayAdapter<Sheet> {
 
@@ -31,8 +34,8 @@ public class SheetsAdapter extends ArrayAdapter<Sheet> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.sheet_row, parent, false);
         }
 
-        TextView name = (TextView)convertView.findViewById(R.id.sheet_name);
-        name.setText(getItem(position).Name);
+        //TextView name = (TextView)convertView.findViewById(R.id.sheet_name);
+        //name.setText(getItem(position).Name);
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,14 +50,12 @@ public class SheetsAdapter extends ArrayAdapter<Sheet> {
         //ListView listView = (ListView) convertView.findViewById(R.id.preview_list);
         //listView.setAdapter(new LineAdapter(getContext() , getItem(position).Lines));
 
-        LinearLayout holder = (LinearLayout)convertView.findViewById(R.id.preview_list);
-        holder.removeAllViews();
-        int count = (getItem(position).Lines.size() > 5 ) ? 5 : getItem(position).Lines.size();
-        for(int x =0;x<count;x++){
-            FormulaLine line = new FormulaLine(getContext() , getItem(position) , x);
-            line.setEnabled(false);
-            holder.addView(line);
-        }
+        //Card card = new Card(getContext());
+        //card.setv
+        //CardView cardView = new CardView(getContext());
+        //cardView.view
+
+
 
         return convertView;
     }

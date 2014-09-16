@@ -321,7 +321,7 @@ public class CoreSolver
 
         Matcher perc = PercentageNotation.matcher(expr);
         while (perc.find()){
-            Log.e("xappr0" , expr);
+            //Log.e("xappr0" , expr);
             String s = expr.substring(perc.start() , perc.end()).replace("%","").replace(" ","");//.replace("+","").replace("-","");
 
             boolean plus = s.contains("+");
@@ -330,7 +330,7 @@ public class CoreSolver
             s ="*" +  ((plus) ? (1+f/100) : (1-f/100) );
             expr = expr.substring(0,perc.start()) + s + expr.substring(perc.end(),expr.length());
             perc = PercentageNotation.matcher(expr);
-            Log.e("xappr1" , s);
+            //Log.e("xappr1" , s);
         }
 
         Matcher knotation = kNotation.matcher(expr);

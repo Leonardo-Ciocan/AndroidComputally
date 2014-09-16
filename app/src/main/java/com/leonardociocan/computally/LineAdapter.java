@@ -12,8 +12,8 @@ import android.widget.EditText;
 import java.util.List;
 
 
-public class LineAdapter extends ArrayAdapter<String> {
-    public LineAdapter(Context context, List<String> objects) {
+public class LineAdapter extends ArrayAdapter<Expression> {
+    public LineAdapter(Context context, List<Expression> objects) {
         super(context, R.layout.line_layout, objects);
     }
 

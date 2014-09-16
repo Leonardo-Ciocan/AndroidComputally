@@ -22,12 +22,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import java.util.List;
+
 
 public class MainActivity extends Activity {
 
-    void returnHash(int key){
-        int h = 5;
-    }
 
     LineAdapter adapter;
     DrawerLayout mDrawerLayout;
@@ -47,9 +46,13 @@ public class MainActivity extends Activity {
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //String input = "30 dollars x 5 people";
-        //String result = Core.Solver.Sanitize(input);
-        //int x = 0;
+        /*Core.selectedSheet.Lines.clear();
+        List<Expression> ls = Core.dataSource.GetLines(Core.selectedSheet.id);
+        for(Expression e : ls){
+            Core.selectedSheet.Lines.add(e);
+        }*/
+
+        adapter.notifyDataSetChanged();
 
 
     }
@@ -85,8 +88,14 @@ public class MainActivity extends Activity {
                 return(true);
         }
         if(id == R.id.action_new_line){
-            Core.selectedSheet.Lines.add("");
-           adapter.notifyDataSetChanged();
+            //Core.selectedSheet.Lines.add(new );
+            Core.dataSource.addLine(Core.selectedSheet.id, "");
+            Core.selectedSheet.Lines.clear();
+            List<Expression> ls = Core.dataSource.GetLines(Core.selectedSheet.id);
+            for(Expression e : ls){
+                Core.selectedSheet.Lines.add(e);
+            }
+            adapter.notifyDataSetChanged();
         }
         if(id == R.id.action_substitutions){
             Intent i = new Intent();

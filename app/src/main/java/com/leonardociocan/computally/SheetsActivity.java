@@ -3,11 +3,16 @@ package com.leonardociocan.computally;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -23,10 +28,16 @@ public class SheetsActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Core.dataSource = new CoreDataSource(this);
+        Core.dataSource.open();
+
+
+
         setContentView(R.layout.activity_sheets);
         getSupportFragmentManager().beginTransaction().replace(R.id.root , fragment).commit();
         getActionBar().setTitle("My sheets");
         Core.listener.clear();
+        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.argb(255, 255, 255, 255)));//getResources().getColor(R.color.gray)));
     }
 
     @Override
@@ -40,17 +51,39 @@ public class SheetsActivity extends FragmentActivity {
 
                 AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-                alert.setTitle("New sheet name");
+                //alert.setTitle("New sheet name");
 
                 final EditText input = new EditText(this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                input.setHint("Enter sheet name");
                 alert.setView(input);
+
+                input.setOnKeyListener(new View.OnKeyListener() {
+                    @Override
+                    public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                        if(keyEvent.getAction() != KeyEvent.ACTION_DOWN) return true;
+                        if(keyEvent.getKeyCode() == 13) {
+                            String value = input.getText().toString();
+                            Sheet s = new Sheet(value);
+                            Core.sheets.add(s);
+                            Core.dataSource.addSheet(value);
+                            Core.sheets = Core.dataSource.GetSheets();
+                            fragment.update();
+                            return true;
+                        }
+                        return false;
+                    }
+                });
 
                 alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String value = input.getText().toString();
                         Sheet s = new Sheet(value);
                         Core.sheets.add(s);
-                        fragment.refresh();
+                        Core.dataSource.addSheet(value);
+                        Core.sheets = Core.dataSource.GetSheets();
+                        //fragment.refresh();
+                        fragment.update();
                     }
                 });
 
@@ -77,6 +110,6 @@ public class SheetsActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        fragment.refresh();
+        fragment.update();
     }
 }

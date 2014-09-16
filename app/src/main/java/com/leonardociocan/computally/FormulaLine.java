@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -70,7 +71,7 @@ public class FormulaLine extends LinearLayout {
         input.setSheet(sheet);
 
         final TextView result= (TextView)findViewById(R.id.result);
-        input.setText(sheet.Lines.get(x));
+        input.setText(sheet.Lines.get(x).value);
 resultView = result;
         Core.setSheetChangedListener(new SheetChangedListener() {
             @Override
@@ -104,6 +105,7 @@ resultView = result;
             }
         });
 
+        Core.reloadAll();
         input.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
@@ -116,7 +118,8 @@ resultView = result;
             }
             @Override
             public void afterTextChanged(Editable editable) {
-                sheet.Lines.set(x , input.getText().toString());
+                sheet.Lines.get(x).value =   input.getText().toString();
+
                 if(!input.flag)Core.reloadAll();
                 if(!input.flag){
                     if(sheet.Substitutions.size() == 0 )return;
@@ -125,13 +128,22 @@ resultView = result;
                         if(sub.getFrom().equals("") || sub.getTo().equals("")) continue;
                         Pattern pattern = Pattern.compile("("+sub.from+")");
                         Matcher m = pattern.matcher(input.getText());
-                        sheet.Lines.set(x , m.replaceAll(sub.getTo()));
+                        sheet.Lines.get(x).value =   m.replaceAll(sub.getTo());
                     }
                     input.flag = true;
-                    input.setText(sheet.Lines.get(x));
+                    input.setText(sheet.Lines.get(x).value);
                     input.flag = false;
                     input.setSelection( input.getText().length() );
                     input.highlight();
+                }
+            }
+        });
+
+        input.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(!b){
+                    Core.dataSource.updateLine(sheet.Lines.get(x).id , sheet.Lines.get(x).value);
                 }
             }
         });

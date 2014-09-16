@@ -3,12 +3,10 @@ package com.leonardociocan.computally;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by leo on 08/09/14.
- */
 public class Core {
     public static Sheet selectedSheet = new Sheet();
     public static List<Sheet> sheets = new ArrayList<Sheet>();
+    public static CoreDataSource dataSource;
 
     public void addSheet(Sheet s){
 
