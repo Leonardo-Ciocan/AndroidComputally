@@ -18,12 +18,14 @@ import java.util.regex.Pattern;
 
 public class FormulaLine extends LinearLayout {
 
+    boolean enabled;
     int x = 0;
     Sheet sheet;
-    public FormulaLine(Context context , Sheet t , int x ) {
+    public FormulaLine(Context context , Sheet t , int x , boolean enabled ) {
         super(context);
         this.x = x;
         this.sheet = t;
+        this.enabled = enabled;
         /*FormulaEditText text = new FormulaEditText(context);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT ,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -69,6 +71,7 @@ public class FormulaLine extends LinearLayout {
         inflate(context, R.layout.line_layout, this);
         final FormulaEditText input = (FormulaEditText)findViewById(R.id.input);
         input.setSheet(sheet);
+        input.setEnabled(enabled);
 
         final TextView result= (TextView)findViewById(R.id.result);
         input.setText(sheet.Lines.get(x).value);
@@ -76,7 +79,7 @@ resultView = result;
         Core.setSheetChangedListener(new SheetChangedListener() {
             @Override
             public void SheetChanged() {
-                new Thread(new Runnable() {
+                /*new Thread(new Runnable() {
                     @Override
                     public void run() {
                         String resultstr = "0.0";
@@ -100,7 +103,12 @@ resultView = result;
                             }
                         }
                     }
-                }).start();
+                }).start();*/
+
+                ComputeAsyncTask task = new ComputeAsyncTask(FormulaLine.this);
+
+                task.execute(input.getText().toString());
+
 
             }
         });

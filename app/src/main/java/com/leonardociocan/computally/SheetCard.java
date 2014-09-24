@@ -59,8 +59,7 @@ public class SheetCard extends Card {
         holder.removeAllViews();
         int count = (s.Lines.size() > 3 ) ? 3 :s.Lines.size();
         for(int x =0;x<count;x++){
-            FormulaLine line = new FormulaLine(getContext() , s , x);
-            line.setEnabled(false);
+            FormulaLine line = new FormulaLine(getContext() , s , x , false);
             holder.addView(line);
         }
     }

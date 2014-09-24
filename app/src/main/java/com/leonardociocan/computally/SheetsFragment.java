@@ -68,8 +68,8 @@ public class SheetsFragment extends Fragment {
         for(Sheet s : Core.sheets){
             SheetCard card = new SheetCard(getActivity(),s , mCardArrayAdapter);
             cards.add(card);
-            mCardArrayAdapter.notifyDataSetChanged();
         }
+        mCardArrayAdapter.notifyDataSetChanged();
     }
 
 }

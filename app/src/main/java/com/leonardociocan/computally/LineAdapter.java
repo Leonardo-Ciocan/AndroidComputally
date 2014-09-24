@@ -21,7 +21,7 @@ public class LineAdapter extends ArrayAdapter<Expression> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
-            convertView = new FormulaLine(getContext() , Core.selectedSheet , position );
+            convertView = new FormulaLine(getContext() , Core.selectedSheet , position , true );
         }
 
         return convertView;
